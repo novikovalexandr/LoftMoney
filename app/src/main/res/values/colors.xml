@@ -2,5 +2,14 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#3574fa</color> //#FF4081
+    <color name="white">#FFFFFF</color>
+    <color name="lightish_blue">#3574fa</color>
+
+    <color name="apple_green">#7ed321</color>
+    <color name="white_three">#eaeaea</color>
+
+    <color name="btn_color_enabled">@color/apple_green</color>
+    <color name="btn_color_disabled">@color/white_three</color>
+
 </resources>
