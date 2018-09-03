@@ -1,48 +1,27 @@
 package com.alexandr4.loftmoney;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+public class ItemActivity {
+    private String name;
+    private String price;
 
-import java.util.ArrayList;
-import java.util.List;
+    ItemActivity(String name, String price) {
+        this.name = name;
+        this.price = price;
+    }
 
-public class ItemActivity extends AppCompatActivity {
+    public String getName() {
+        return name;
+    }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_item);
+    public void setName(String name) {
+        this.name = name;
+    }
 
-        List<Item> items = new ArrayList<>();
-        items.add(new Item("Молоко","70 р"));
-        items.add(new Item("Зубная щетка","70 р"));
-        items.add(new Item("Сковорода с антипригарным покрытием","10000 р"));
-        items.add(new Item("Зубочистка","2 р"));
-        items.add(new Item("Лошадь","100000 р"));
-        items.add(new Item("Молоко","70 р"));
-        items.add(new Item("Зубная щетка","70 р"));
-        items.add(new Item("Сковорода с антипригарным покрытием","10000 р"));
-        items.add(new Item("Зубочистка","2 р"));
-        items.add(new Item("Лошадь","100000 р"));
-        items.add(new Item("Молоко","70 р"));
-        items.add(new Item("Зубная щетка","70 р"));
-        items.add(new Item("Сковорода с антипригарным покрытием","10000 р"));
-        items.add(new Item("Зубочистка","2 р"));
-        items.add(new Item("Лошадь","100000 р"));
-        items.add(new Item("Молоко","70 р"));
-        items.add(new Item("Зубная щетка","70 р"));
-        items.add(new Item("Сковорода с антипригарным покрытием","10000 р"));
-        items.add(new Item("Зубочистка","2 р"));
-        items.add(new Item("Лошадь","100000 р"));
+    public String getPrice() {
+        return price;
+    }
 
-        ItemsAdapter adapter = new ItemsAdapter();
-
-        adapter.setItems(items);
-
-        RecyclerView recycler = findViewById(R.id.recycler);
-        recycler.setAdapter(adapter);
-        recycler.setLayoutManager(new LinearLayoutManager(this));
+    public void setPrice(String price) {
+        this.price = price;
     }
 }
