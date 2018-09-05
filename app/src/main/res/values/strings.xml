@@ -1,10 +1,21 @@
 <resources>
     <string name="app_name">LoftMoney</string>
+    <string name="incomes">Доходы</string>
+    <string name="expenses">Расходы</string>
+    <string name="balance">Баланс</string>
 
     <!-- activity_add -->
     <string name="add_hint_name">Наименование</string>
     <string name="add_hint_price">Цена</string>
     <string name="add_button_add">Добавить</string>
-
+    <!-- main screen -->
+    <string name="main_tab_incomes">@string/incomes</string>
+    <string name="main_tab_expenses">@string/expenses</string>
+    
+    <string-array name="main_tabs">
+        <item>@string/incomes</item>
+        <item>@string/expenses</item>
+        <item>@string/balance</item>
+    </string-array>
 
 </resources>
