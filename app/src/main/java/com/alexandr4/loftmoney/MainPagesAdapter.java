@@ -1,5 +1,6 @@
 package com.alexandr4.loftmoney;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -8,8 +9,8 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 public class MainPagesAdapter extends FragmentPagerAdapter {
-    private final static int PAGE_INCOMES = 0;
-    private final static int PAGE_EXPENSES = 1;
+    private final static int PAGE_INCOME = 0;
+    private final static int PAGE_EXPENSE = 1;
     private final static int PAGE_BALANCE = 2;
     private final static int PAGES_COUNT = 3;
     private String[] pagesTitles;
@@ -24,14 +25,14 @@ public class MainPagesAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
 
         switch (position) {
-            case PAGE_INCOMES:
-                return ItemsFragment.newInstance(ItemsFragment.TYPE_INCOMES);
+            case PAGE_INCOME:
+                return ItemsFragment.newInstance(ItemActivity.TYPE_INCOME);
 
-            case PAGE_EXPENSES:
-                return ItemsFragment.newInstance(ItemsFragment.TYPE_EXPENSES);
+            case PAGE_EXPENSE:
+                return ItemsFragment.newInstance(ItemActivity.TYPE_EXPENSE);
 
             case PAGE_BALANCE:
-                return ItemsFragment.newInstance(ItemsFragment.TYPE_BALANCE);
+                return ItemsFragment.newInstance(ItemActivity.TYPE_BALANCE);
 
             default:
                 return null;

@@ -55,7 +55,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
 
         void bind(ItemActivity item) {
             name.setText(item.getName());
-            price.setText(item.getPrice());
+            price.setText(String.valueOf(item.getPrice()));
         }
 
     }
