@@ -1,8 +1,6 @@
 package com.alexandr4.loftmoney;
 
-import android.content.ClipData;
 import android.content.Context;
-import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -26,13 +24,13 @@ public class MainPagesAdapter extends FragmentPagerAdapter {
 
         switch (position) {
             case PAGE_INCOME:
-                return ItemsFragment.newInstance(ItemActivity.TYPE_INCOME);
+                return ItemsFragment.newInstance(Item.TYPE_INCOME);
 
             case PAGE_EXPENSE:
-                return ItemsFragment.newInstance(ItemActivity.TYPE_EXPENSE);
+                return ItemsFragment.newInstance(Item.TYPE_EXPENSE);
 
             case PAGE_BALANCE:
-                return ItemsFragment.newInstance(ItemActivity.TYPE_BALANCE);
+                return BalanceFragment.newInstance();
 
             default:
                 return null;

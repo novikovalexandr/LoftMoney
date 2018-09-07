@@ -40,8 +40,8 @@ public class App extends Application {
                 .create();
 
         Retrofit retrofit = new Retrofit.Builder()
-                //.baseUrl("http://loftschoolandroid.getsandbox.com")
-                .baseUrl("http://testloftmoney.getsandbox.com")
+                .baseUrl("http://loftschoolandroid.getsandbox.com")
+                //.baseUrl("http://testloftmoney.getsandbox.com")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build();
