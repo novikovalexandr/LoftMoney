@@ -7,10 +7,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 public class MainPagesAdapter extends FragmentPagerAdapter {
-    private final static int PAGE_INCOME = 0;
-    private final static int PAGE_EXPENSE = 1;
-    private final static int PAGE_BALANCE = 2;
-    private final static int PAGES_COUNT = 3;
+    public final static int PAGE_INCOME = 0;
+    public final static int PAGE_EXPENSE = 1;
+    public final static int PAGE_BALANCE = 2;
+    public final static int PAGES_COUNT = 3;
     private String[] pagesTitles;
 
     public MainPagesAdapter(FragmentManager fm, Context context) {

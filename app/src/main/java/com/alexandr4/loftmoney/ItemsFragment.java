@@ -53,7 +53,7 @@ public class ItemsFragment extends Fragment {
     private String type;
     private Api api;
     private SwipeRefreshLayout refresh;
-    private FloatingActionButton fab;
+    //private FloatingActionButton fab;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -101,7 +101,7 @@ public class ItemsFragment extends Fragment {
         recycler = view.findViewById(R.id.recycler);
         recycler.setAdapter(adapter);
         recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
-        fab = view.findViewById(R.id.fab);
+/*        fab = view.findViewById(R.id.fab);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -110,7 +110,7 @@ public class ItemsFragment extends Fragment {
                 intent.putExtra(AddActivity.KEY_TYPE, type);
                 startActivityForResult(intent, REQUEST_CODE);
             }
-        });
+        });*/
 
     }
 
@@ -151,9 +151,10 @@ public class ItemsFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
             Item item = data.getParcelableExtra(AddActivity.KEY_ITEM);
-            adapter.addItem(item);
+            if (item.getType().equals(type)) {
+                adapter.addItem(item);
+            }
         }
-
     }
 
 // option No. 2
