@@ -1,17 +1,16 @@
 package com.alexandr4.loftmoney;
 
 
-import android.annotation.SuppressLint;
-import android.app.Application;
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Bundle;
 
 
-import android.os.Handler;
-import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -19,13 +18,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static android.app.Activity.RESULT_OK;
 
 
 /**
@@ -35,6 +34,7 @@ public class ItemsFragment extends Fragment {
 
     private static final String TAG = "ItemsFragment";
     private static final String KEY_TYPE = "type";
+    public static final int REQUEST_CODE = 100;
 
     public static ItemsFragment newInstance(String type) {
         ItemsFragment fragment = new ItemsFragment();
@@ -52,6 +52,8 @@ public class ItemsFragment extends Fragment {
     private ItemsAdapter adapter;
     private String type;
     private Api api;
+    private SwipeRefreshLayout refresh;
+    private FloatingActionButton fab;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -81,9 +83,35 @@ public class ItemsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         Log.i(TAG, "onViewCreated: ");
+        refresh = view.findViewById(R.id.refresh);
+        refresh.setColorSchemeColors(
+                ContextCompat.getColor(requireContext(), R.color.apple_green),
+                ContextCompat.getColor(requireContext(), R.color.colorAccent),
+                ContextCompat.getColor(requireContext(), R.color.dark_sky_blue)
+        );
+
+        refresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+
+            @Override
+            public void onRefresh() {
+                loadItems();
+            }
+        });
+
         recycler = view.findViewById(R.id.recycler);
         recycler.setAdapter(adapter);
         recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
+        fab = view.findViewById(R.id.fab);
+
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(requireContext(), AddActivity.class);
+                intent.putExtra(AddActivity.KEY_TYPE, type);
+                startActivityForResult(intent, REQUEST_CODE);
+            }
+        });
+
     }
 
     @Override
@@ -100,39 +128,50 @@ public class ItemsFragment extends Fragment {
 
     // option No. 3
     private void loadItems() {
-        Call<List<ItemActivity>> call = api.getItems(type);
+        Call<List<Item>> call = api.getItems(type);
 
-        call.enqueue(new Callback<List<ItemActivity>>() {
+        call.enqueue(new Callback<List<Item>>() {
             @Override
-            public void onResponse(@NonNull Call<List<ItemActivity>> call, @NonNull Response<List<ItemActivity>> response) {
-                List<ItemActivity> items = response.body();
+            public void onResponse(@NonNull Call<List<Item>> call, @NonNull Response<List<Item>> response) {
+                refresh.setRefreshing(false);
+                List<Item> items = response.body();
                 adapter.setItems(items);
             }
 
             @Override
-            public void onFailure(@NonNull Call<List<ItemActivity>> call, @NonNull Throwable t) {
-
+            public void onFailure(@NonNull Call<List<Item>> call, @NonNull Throwable t) {
+                refresh.setRefreshing(false);
             }
         });
+
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            Item item = data.getParcelableExtra(AddActivity.KEY_ITEM);
+            adapter.addItem(item);
+        }
 
     }
 
 // option No. 2
 /*    private void loadItems() {
         @SuppressLint("StaticFieldLeak")
-        AsyncTask<Void, Void, List<ItemActivity>> asyncTask = new AsyncTask<Void, Void, List<ItemActivity>>() {
+        AsyncTask<Void, Void, List<Item>> asyncTask = new AsyncTask<Void, Void, List<Item>>() {
             @Override
             protected void onPreExecute() {
                 super.onPreExecute();
             }
 
             @Override
-            protected List<ItemActivity> doInBackground(Void... voids) {
+            protected List<Item> doInBackground(Void... voids) {
                 Call call = api.getItems(type);
 
                 try {
-                    Response<List<ItemActivity>> response = call.execute();
-                    List<ItemActivity> items = response.body();
+                    Response<List<Item>> response = call.execute();
+                    List<Item> items = response.body();
                     return items;
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -141,7 +180,7 @@ public class ItemsFragment extends Fragment {
             }
 
             @Override
-            protected void onPostExecute(List<ItemActivity> items) {
+            protected void onPostExecute(List<Item> items) {
                 if (items != null) {
                     adapter.setItems(items);
                 }
@@ -175,8 +214,8 @@ public class ItemsFragment extends Fragment {
             Call call = api.getItems(type);
 
             try {
-                Response<List<ItemActivity>> response = call.execute();
-                List<ItemActivity> items = response.body();
+                Response<List<Item>> response = call.execute();
+                List<Item> items = response.body();
                 Message message = handler.obtainMessage(111, items);
                 message.sendToTarget();
 
@@ -188,7 +227,7 @@ public class ItemsFragment extends Fragment {
             @Override
             public boolean handleMessage (Message msg){
                 if (msg.what == 111) {
-                    List<ItemActivity> items = (List<ItemActivity>) msg.obj;
+                    List<Item> items = (List<Item>) msg.obj;
                     adapter.setItems(items);
                     return true;
                 }

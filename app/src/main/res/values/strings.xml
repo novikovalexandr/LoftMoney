@@ -9,13 +9,18 @@
     <string name="add_hint_price">Цена</string>
     <string name="add_button_add">Добавить</string>
     <!-- main screen -->
+    <string name="main_screen_title">Учет бюджета</string>
     <string name="main_tab_income">@string/income</string>
     <string name="main_tab_expense">@string/expense</string>
-    
+    <string name="main_tab_balance">@string/balance</string>
+
     <string-array name="main_tabs">
         <item>@string/income</item>
         <item>@string/expense</item>
         <item>@string/balance</item>
     </string-array>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

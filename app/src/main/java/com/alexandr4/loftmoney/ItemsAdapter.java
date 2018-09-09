@@ -13,11 +13,18 @@ import java.util.List;
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHolder> {
 
-    private List<ItemActivity> items = Collections.emptyList();
+    private List<Item> items = Collections.emptyList();
 
-    public void setItems(List<ItemActivity> items) {
+    public void setItems(List<Item> items) {
         this.items = items;
         notifyDataSetChanged();
+    }
+
+    public void addItem(Item item) {
+        this.items.add(item);
+        notifyItemInserted(items.size() - 1);
+
+
     }
 
     @Override
@@ -37,7 +44,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
-        ItemActivity item = items.get(position);
+        Item item = items.get(position);
         holder.bind(item);
     }
 
@@ -53,7 +60,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
 
         }
 
-        void bind(ItemActivity item) {
+        void bind(Item item) {
             name.setText(item.getName());
             price.setText(String.valueOf(item.getPrice()));
         }
