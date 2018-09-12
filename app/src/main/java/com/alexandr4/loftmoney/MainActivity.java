@@ -2,6 +2,7 @@ package com.alexandr4.loftmoney;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
@@ -9,6 +10,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
@@ -21,11 +23,16 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     public static final int REQUEST_CODE = 100;
 
-    private TabLayout tabLayout;
+    public TabLayout tabLayout;
     private ViewPager viewPager;
     private MainPagesAdapter adapter;
     private Toolbar toolbar;
     private FloatingActionButton fab;
+    private ActionMode actionMode;
+
+    public Toolbar getToolbar() {
+        return toolbar;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         setSupportActionBar(toolbar);
         adapter = new MainPagesAdapter(getSupportFragmentManager(), this);
 
@@ -69,6 +75,23 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.setupWithViewPager(viewPager);
         viewPager.addOnPageChangeListener(new PageListener());
     }
+
+    @Override
+    public void onSupportActionModeFinished(@NonNull ActionMode mode) {
+        super.onSupportActionModeFinished(mode);
+        actionMode = mode;
+        tabLayout.setBackgroundColor(getResources().getColor(R.color.colorPrimary));
+        fab.show();
+    }
+
+    @Override
+    public void onSupportActionModeStarted(@NonNull ActionMode mode) {
+        super.onSupportActionModeStarted(mode);
+        actionMode = mode;
+        tabLayout.setBackgroundColor(getResources().getColor(R.color.action_mode_color));
+        fab.hide();
+    }
+
 
     private void setActionBar(Toolbar toolbar) {
     }
@@ -101,11 +124,13 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
+            Log.i(TAG, "onPageScrolled: ");
         }
 
         @Override
         public void onPageSelected(int position) {
+            Log.i(TAG, "onPageSelected: ");
+
             switch (position) {
                 case MainPagesAdapter.PAGE_INCOME:
                 case MainPagesAdapter.PAGE_EXPENSE:
@@ -119,7 +144,10 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onPageScrollStateChanged(int state) {
-
+            Log.i(TAG, "onPageScrollStateChanged: ");
+            if (actionMode != null) {
+                actionMode.finish();
+            }
         }
     }
 
@@ -132,4 +160,5 @@ public class MainActivity extends AppCompatActivity {
             fragment.onActivityResult(requestCode, resultCode, data);
         }
     }
+
 }
