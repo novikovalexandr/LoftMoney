@@ -1,30 +1,45 @@
 package com.alexandr4.loftmoney;
 
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 
 
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.zip.Inflater;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 import static android.app.Activity.RESULT_OK;
+
 
 
 /**
@@ -53,7 +68,7 @@ public class ItemsFragment extends Fragment {
     private String type;
     private Api api;
     private SwipeRefreshLayout refresh;
-    private FloatingActionButton fab;
+    private ActionMode actionMode;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -68,8 +83,8 @@ public class ItemsFragment extends Fragment {
         api = app.getApi();*/
 
         adapter = new ItemsAdapter();
+        adapter.setListener(new AdapterListener());
         loadItems();
-
     }
 
     @Override
@@ -97,21 +112,9 @@ public class ItemsFragment extends Fragment {
                 loadItems();
             }
         });
-
         recycler = view.findViewById(R.id.recycler);
         recycler.setAdapter(adapter);
         recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
-        fab = view.findViewById(R.id.fab);
-
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(requireContext(), AddActivity.class);
-                intent.putExtra(AddActivity.KEY_TYPE, type);
-                startActivityForResult(intent, REQUEST_CODE);
-            }
-        });
-
     }
 
     @Override
@@ -143,7 +146,6 @@ public class ItemsFragment extends Fragment {
                 refresh.setRefreshing(false);
             }
         });
-
     }
 
     @Override
@@ -151,89 +153,93 @@ public class ItemsFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
             Item item = data.getParcelableExtra(AddActivity.KEY_ITEM);
-            adapter.addItem(item);
+            if (item.getType().equals(type)) {
+                adapter.addItem(item);
+            }
         }
-
     }
 
-// option No. 2
-/*    private void loadItems() {
-        @SuppressLint("StaticFieldLeak")
-        AsyncTask<Void, Void, List<Item>> asyncTask = new AsyncTask<Void, Void, List<Item>>() {
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
+    private void removeSelectedItems() {
+        List<Integer> selected = adapter.getSelectedItems();
+        int j = selected.size();
+        for (int i = 0; i < j; i++) {
+            if (adapter.removeItem(selected.get(i))) {
+                i--;
+                j--;
             }
-
-            @Override
-            protected List<Item> doInBackground(Void... voids) {
-                Call call = api.getItems(type);
-
-                try {
-                    Response<List<Item>> response = call.execute();
-                    List<Item> items = response.body();
-                    return items;
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                return null;
-            }
-
-            @Override
-            protected void onPostExecute(List<Item> items) {
-                if (items != null) {
-                    adapter.setItems(items);
-                }
-            }
-        };
-
-        asyncTask.execute();
-    }
-*/
-
-// option No. 1
-/*    private void loadItems() {
-        new LoadItemsTask().start();
-    }
-
-    private class LoadItemsTask implements Runnable, Handler.Callback {
-        private Thread thread;
-        private Handler handler;
-
-        public LoadItemsTask() {
-            thread = new Thread(this);
-            handler = new Handler(this);
         }
+        actionMode.finish();
+    }
 
-        public void start() {
-            thread.start();
+    class AdapterListener implements ItemsAdapterListener {
+
+        @Override
+        public void onItemClick(Item item, int position) {
+            Log.i(TAG, "onItemClick: name = " + item.getName() + " position: " + position);
+            if (actionMode == null) {
+                return;
+            }
+            toggleItem(position);
         }
 
         @Override
-        public void run() {
-            Call call = api.getItems(type);
+        public void onItemLongClick(Item item, int position) {
 
-            try {
-                Response<List<Item>> response = call.execute();
-                List<Item> items = response.body();
-                Message message = handler.obtainMessage(111, items);
-                message.sendToTarget();
-
-            } catch (IOException e) {
-                e.printStackTrace();
+            if (actionMode != null) {
+                return;
             }
+            ((AppCompatActivity) getActivity()).startSupportActionMode(new ActionModeCallback());
+            toggleItem(position);
         }
 
-            @Override
-            public boolean handleMessage (Message msg){
-                if (msg.what == 111) {
-                    List<Item> items = (List<Item>) msg.obj;
-                    adapter.setItems(items);
-                    return true;
+        private void toggleItem(int position) {
+            adapter.toggleItem(position);
+        }
+    }
+
+    private class ActionModeCallback implements ActionMode.Callback {
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            Log.i(TAG, "onCreateActionMode: ");
+            actionMode = mode;
+            return true;
+        }
+
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+       /* MenuInflater inflater = new MenuInflater(requireContext());
+        inflater.inflate(R.menu.menu_action_mode, menu);*/
+            MenuInflater inflater = new MenuInflater(requireContext());
+            inflater.inflate(R.menu.menu_action_mode, menu);
+            return true;
+        }
+
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            if (item.getItemId() == R.id.menu_item_delete) {
+                showConfirmationDialog();
+                return true;
+            }
+            return false;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            adapter.clearSelections();
+            actionMode = null;
+        }
+
+        private void showConfirmationDialog() {
+            ConfirmDeleteDialog dialog = new ConfirmDeleteDialog();
+            dialog.show(getFragmentManager(), null);
+            dialog.setListener(new ConfirmDeleteDialog.Listener() {
+                @Override
+                public void onDeleteConfirmed() {
+                    removeSelectedItems();
                 }
-                return false;
-            }
+            });
         }
-*/
+    }
+
 
 }

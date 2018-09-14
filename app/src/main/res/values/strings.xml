@@ -13,6 +13,11 @@
     <string name="main_tab_income">@string/income</string>
     <string name="main_tab_expense">@string/expense</string>
     <string name="main_tab_balance">@string/balance</string>
+    <!-- menu screen -->
+    <string name="menu_item_delete">Удалить</string>
+    <string name="delete_confirmation">Вы действительно хотите удалить выбранные элементы?</string>
+    <string name="delete_yes">Да</string>
+    <string name="delete_no">Нет</string>
 
     <string-array name="main_tabs">
         <item>@string/income</item>
