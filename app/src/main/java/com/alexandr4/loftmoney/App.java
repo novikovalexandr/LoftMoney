@@ -41,12 +41,10 @@ public class App extends Application {
 
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("http://loftschoolandroid.getsandbox.com")
-                //.baseUrl("http://testloftmoney.getsandbox.com")
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .client(client)
                 .build();
         api = retrofit.create(Api.class);
-
     }
 
     public Api getApi() {

@@ -47,7 +47,6 @@ import static android.app.Activity.RESULT_OK;
  */
 public class ItemsFragment extends Fragment {
 
-    private static final String TAG = "ItemsFragment";
     private static final String KEY_TYPE = "type";
     public static final int REQUEST_CODE = 100;
 
@@ -73,15 +72,10 @@ public class ItemsFragment extends Fragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.i(TAG, "onCreate: ");
         Bundle args = getArguments();
         type = args.getString(KEY_TYPE);
 
         api = ((App) getActivity().getApplication()).getApi();
-       /* Application application = getActivity().getApplication();
-        App app = (App) application;
-        api = app.getApi();*/
-
         adapter = new ItemsAdapter();
         adapter.setListener(new AdapterListener());
         loadItems();
@@ -91,13 +85,11 @@ public class ItemsFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        Log.i(TAG, "onCreateView: ");
         return inflater.inflate(R.layout.fragment_items, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        Log.i(TAG, "onViewCreated: ");
         refresh = view.findViewById(R.id.refresh);
         refresh.setColorSchemeColors(
                 ContextCompat.getColor(requireContext(), R.color.apple_green),
@@ -115,18 +107,6 @@ public class ItemsFragment extends Fragment {
         recycler = view.findViewById(R.id.recycler);
         recycler.setAdapter(adapter);
         recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
-    }
-
-    @Override
-    public void onDestroyView() {
-        Log.i(TAG, "onDestroyView: ");
-        super.onDestroyView();
-    }
-
-    @Override
-    public void onDestroy() {
-        Log.i(TAG, "onDestroy: ");
-        super.onDestroy();
     }
 
     // option No. 3
@@ -175,7 +155,6 @@ public class ItemsFragment extends Fragment {
 
         @Override
         public void onItemClick(Item item, int position) {
-            Log.i(TAG, "onItemClick: name = " + item.getName() + " position: " + position);
             if (actionMode == null) {
                 return;
             }
@@ -184,7 +163,6 @@ public class ItemsFragment extends Fragment {
 
         @Override
         public void onItemLongClick(Item item, int position) {
-
             if (actionMode != null) {
                 return;
             }
@@ -200,7 +178,6 @@ public class ItemsFragment extends Fragment {
     private class ActionModeCallback implements ActionMode.Callback {
         @Override
         public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-            Log.i(TAG, "onCreateActionMode: ");
             actionMode = mode;
             return true;
         }

@@ -95,7 +95,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
             super(itemView);
             name = itemView.findViewById(R.id.name);
             price = itemView.findViewById(R.id.price);
-
         }
 
         void bind(final Item item,

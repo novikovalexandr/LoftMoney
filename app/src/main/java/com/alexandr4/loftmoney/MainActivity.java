@@ -20,7 +20,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MainActivity";
     public static final int REQUEST_CODE = 100;
 
     public TabLayout tabLayout;
@@ -38,8 +37,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        Log.i(TAG, "onCreate: ");
 
         toolbar = findViewById(R.id.toolbar);
         viewPager = findViewById(R.id.view_pager);
@@ -92,45 +89,15 @@ public class MainActivity extends AppCompatActivity {
         fab.hide();
     }
 
-
-    private void setActionBar(Toolbar toolbar) {
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        Log.i(TAG, "onStart: ");
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        Log.i(TAG, "onResume: ");
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        Log.i(TAG, "onPause: ");
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Log.i(TAG, "onDestroy: ");
-    }
-
     class PageListener implements ViewPager.OnPageChangeListener {
 
         @Override
         public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-            Log.i(TAG, "onPageScrolled: ");
+
         }
 
         @Override
         public void onPageSelected(int position) {
-            Log.i(TAG, "onPageSelected: ");
-
             switch (position) {
                 case MainPagesAdapter.PAGE_INCOME:
                 case MainPagesAdapter.PAGE_EXPENSE:
@@ -144,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public void onPageScrollStateChanged(int state) {
-            Log.i(TAG, "onPageScrollStateChanged: ");
             if (actionMode != null) {
                 actionMode.finish();
             }
