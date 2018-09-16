@@ -78,7 +78,7 @@ public class ItemsFragment extends Fragment {
         api = ((App) getActivity().getApplication()).getApi();
         adapter = new ItemsAdapter();
         adapter.setListener(new AdapterListener());
-        loadItems();
+     //   loadItems();
     }
 
     @Override
@@ -107,6 +107,7 @@ public class ItemsFragment extends Fragment {
         recycler = view.findViewById(R.id.recycler);
         recycler.setAdapter(adapter);
         recycler.setLayoutManager(new LinearLayoutManager(requireContext()));
+        loadItems();
     }
 
     // option No. 3
