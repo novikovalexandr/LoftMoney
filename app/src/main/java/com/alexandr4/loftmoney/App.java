@@ -2,6 +2,7 @@ package com.alexandr4.loftmoney;
 
 import android.app.Application;
 import android.os.Build;
+import android.support.annotation.NonNull;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -38,11 +39,6 @@ public class App extends Application {
 
         HttpLoggingInterceptor interceptor = new HttpLoggingInterceptor();
         interceptor.setLevel(level);
-/*
-        OkHttpClient client = new OkHttpClient.Builder()
-                .addInterceptor(interceptor)
-                .build();
-*/
 
         final OkHttpClient client = new OkHttpClient.Builder()
                 .addInterceptor(new HttpLoggingInterceptor().setLevel(BuildConfig.DEBUG ? HttpLoggingInterceptor.Level.HEADERS : HttpLoggingInterceptor.Level.NONE))
@@ -74,13 +70,9 @@ public class App extends Application {
         return getSharedPreferences(PREFERENCES_SESSION, MODE_PRIVATE).getString(KEY_AUTH_TOKEN, "");
     }
 
-    public boolean isLoggedIn() {
-        return !TextUtils.isEmpty(getAuthToken());
-    }
-
     private class AuthInterceptor implements Interceptor {
         @Override
-        public Response intercept(Interceptor.Chain chain) throws IOException {
+        public Response intercept(@NonNull Interceptor.Chain chain) throws IOException {
             Request originalRequest = chain.request();
             String authToken = getAuthToken();
             HttpUrl url = originalRequest.url().newBuilder().addQueryParameter("auth-token", authToken).build();

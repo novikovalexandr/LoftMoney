@@ -54,12 +54,6 @@ public class ItemsFragment extends Fragment {
     private static final String KEY_TYPE = "type";
     public static final int REQUEST_CODE = 100;
 
-    private static final int LOADER_ITEMS = 0;
-    private static final int LOADER_ADD = 1;
-    private static final int LOADER_REMOVE = 2;
-
-    private static final String TAG = "App";
-
     public static ItemsFragment newInstance(String type) {
         ItemsFragment fragment = new ItemsFragment();
         Bundle bundle = new Bundle();
@@ -88,7 +82,6 @@ public class ItemsFragment extends Fragment {
         api = ((App) getActivity().getApplication()).getApi();
         adapter = new ItemsAdapter();
         adapter.setListener(new AdapterListener());
-        //   loadItems();
     }
 
     @Override
@@ -141,7 +134,7 @@ public class ItemsFragment extends Fragment {
         Call<PostResults> call = api.addItem(String.valueOf(item.price), item.name, item.type);
         call.enqueue(new Callback<PostResults>() {
             @Override
-            public void onResponse(Call<PostResults> call, Response<PostResults> response) {
+            public void onResponse(@NonNull Call<PostResults> call, @NonNull Response<PostResults> response) {
                 PostResults postResult = response.body();
                 if (postResult != null && postResult.isSuccess()) {
                     item.id = postResult.id;
@@ -150,31 +143,25 @@ public class ItemsFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<PostResults> call, Throwable t) {
+            public void onFailure(@NonNull Call<PostResults> call, @NonNull Throwable t) {
             }
         });
     }
 
-    //private void delItem(final int id) {
-        public static void delItem(final int id) {
+    public static void delItem(final int id) {
         Call<PostResults> call = api.removeItem(id);
         call.enqueue(new Callback<PostResults>() {
             @Override
-            public void onResponse(Call<PostResults> call, Response<PostResults> response) {
-                PostResults postResult = response.body();
-              /*  if (postResult != null && postResult.isSuccess()) {
-                    item.id = postResult.id;
-                    adapter.removeItem(item);//-
-                }*/
+            public void onResponse(@NonNull Call<PostResults> call, @NonNull Response<PostResults> response) {
+
             }
 
             @Override
-            public void onFailure(Call<PostResults> call, Throwable t) {
+            public void onFailure(@NonNull Call<PostResults> call, @NonNull Throwable t) {
 
             }
         });
     }
-
 
     public void removeSelectedItems() {
         List<Integer> selected = adapter.getSelectedItems();
@@ -188,50 +175,6 @@ public class ItemsFragment extends Fragment {
         actionMode.finish();
     }
 
-
-
-
-/*
-    private void removeItem(final int item_id) {
-        getLoaderManager().initLoader(LOADER_REMOVE, null, new LoaderManager.LoaderCallbacks<PostResults>() {
-
-            @Override
-            public Loader<PostResults> onCreateLoader(int id, Bundle args) {
-
-                return new AsyncTaskLoader<PostResults>(getContext()) {
-                    @Override
-                    public PostResults loadInBackground() {
-                        try {
-                            return api.removeItem(item_id).execute().body();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                            return null;
-                        }
-                    }
-                };
-            }
-
-            @Override
-            public void onLoadFinished(Loader<PostResults> loader, PostResults data) {
-                if (data == null) {
-                    Toast.makeText(getContext(), R.string.problem_authorization_message, Toast.LENGTH_SHORT).show();
-                } else {
-                    adapter.remove(data.id);
-                    Toast.makeText(getContext(), "R.string.Remove", Toast.LENGTH_SHORT).show();
-                }
-                getLoaderManager().destroyLoader(LOADER_REMOVE);
-            }
-
-            @Override
-            public void onLoaderReset(Loader<PostResults> loader) {
-            }
-        }).forceLoad();
-
-    }
-
-*/
-
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -243,73 +186,71 @@ public class ItemsFragment extends Fragment {
         }
     }
 
+    class AdapterListener implements ItemsAdapterListener {
 
-class AdapterListener implements ItemsAdapterListener {
-
-    @Override
-    public void onItemClick(Item item, int position) {
-        if (actionMode == null) {
-            return;
+        @Override
+        public void onItemClick(Item item, int position) {
+            if (actionMode == null) {
+                return;
+            }
+            toggleItem(position);
         }
-        toggleItem(position);
-    }
 
-    @Override
-    public void onItemLongClick(Item item, int position) {
-        if (actionMode != null) {
-            return;
+        @Override
+        public void onItemLongClick(Item item, int position) {
+            if (actionMode != null) {
+                return;
+            }
+            ((AppCompatActivity) Objects.requireNonNull(getActivity())).startSupportActionMode(new ActionModeCallback());
+            toggleItem(position);
         }
-        ((AppCompatActivity) getActivity()).startSupportActionMode(new ActionModeCallback());
-        toggleItem(position);
+        private void toggleItem(int position) {
+            adapter.toggleItem(position);
+        }
     }
 
-    private void toggleItem(int position) {
-        adapter.toggleItem(position);
-    }
-}
-
-private class ActionModeCallback implements ActionMode.Callback {
-    @Override
-    public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-        actionMode = mode;
-        return true;
-    }
-
-    @Override
-    public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-       /* MenuInflater inflater = new MenuInflater(requireContext());
-        inflater.inflate(R.menu.menu_action_mode, menu);*/
-        MenuInflater inflater = new MenuInflater(requireContext());
-        inflater.inflate(R.menu.menu_action_mode, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-        if (item.getItemId() == R.id.menu_item_delete) {
-            showConfirmationDialog();
+    private class ActionModeCallback implements ActionMode.Callback {
+        @Override
+        public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+            actionMode = mode;
             return true;
         }
-        return false;
-    }
 
-    @Override
-    public void onDestroyActionMode(ActionMode mode) {
-        adapter.clearSelections();
-        actionMode = null;
-    }
+        @Override
+        public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+       /* MenuInflater inflater = new MenuInflater(requireContext());
+        inflater.inflate(R.menu.menu_action_mode, menu);*/
+            MenuInflater inflater = new MenuInflater(requireContext());
+            inflater.inflate(R.menu.menu_action_mode, menu);
+            return true;
+        }
 
-    private void showConfirmationDialog() {
-        ConfirmDeleteDialog dialog = new ConfirmDeleteDialog();
-        dialog.show(getFragmentManager(), null);
-        dialog.setListener(new ConfirmDeleteDialog.Listener() {
-            @Override
-            public void onDeleteConfirmed() {
-                removeSelectedItems();
+        @Override
+        public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+            if (item.getItemId() == R.id.menu_item_delete) {
+                showConfirmationDialog();
+                return true;
             }
-        });
+            return false;
+        }
+
+        @Override
+        public void onDestroyActionMode(ActionMode mode) {
+            adapter.clearSelections();
+            actionMode = null;
+        }
+
+        private void showConfirmationDialog() {
+            ConfirmDeleteDialog dialog = new ConfirmDeleteDialog();
+            dialog.show(getFragmentManager(), null);
+            dialog.setListener(new ConfirmDeleteDialog.Listener() {
+                @Override
+                public void onDeleteConfirmed() {
+                    removeSelectedItems();
+                }
+            });
+        }
     }
-}
 
 
 }

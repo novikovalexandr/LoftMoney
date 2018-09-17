@@ -25,6 +25,7 @@
     <color name="item_background_default">@color/white</color>
     <color name="auth_version_text">#59ffffff</color>
 
-
+    <color name="fab">#ff9e57</color>
+    <color name="bt_sign_in_bg">#eeffffff</color>
 
 </resources>

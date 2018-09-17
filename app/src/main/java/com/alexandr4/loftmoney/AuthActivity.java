@@ -42,7 +42,6 @@ public class AuthActivity extends AppCompatActivity {
         app = ((App) getApplication());
         api = app.getApi();
 
-
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -88,7 +87,7 @@ public class AuthActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailure(@NonNull Call<AuthResult> call, @NonNull Throwable t) {
-                        showError(getString(R.string.problem_authorization_message));
+                        showError(getString(R.string.auth_error_message));
                     }
                 });
             }
@@ -98,10 +97,6 @@ public class AuthActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
-        if (account != null) {
-            //updateUI(account);
-        }
     }
 
     private void showError(String error) {

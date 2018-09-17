@@ -3,4 +3,6 @@
     <dimen name="addTextInputTextSize">24sp</dimen>
     <dimen name="addBtnTextSize">14sp</dimen>
     <dimen name="itemTextViewTextSize">20sp</dimen>
+    <dimen name="authVersionText">14sp</dimen>
+    <dimen name="authLogoText">36sp</dimen>
 </resources>

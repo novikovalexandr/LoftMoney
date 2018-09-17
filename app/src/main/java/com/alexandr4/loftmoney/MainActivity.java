@@ -36,7 +36,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
     }
 
     @Override
@@ -44,7 +43,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
         toolbar = findViewById(R.id.toolbar);
         viewPager = findViewById(R.id.view_pager);
         tabLayout = findViewById(R.id.tab_layout);
@@ -64,7 +62,6 @@ public class MainActivity extends AppCompatActivity {
                         break;
                 }
                 if (type != null) {
-
                     Intent intent = new Intent(MainActivity.this, AddActivity.class);
                     intent.putExtra(AddActivity.KEY_TYPE, type);
                     startActivityForResult(intent, REQUEST_CODE);
@@ -74,11 +71,9 @@ public class MainActivity extends AppCompatActivity {
 
         setSupportActionBar(toolbar);
         adapter = new MainPagesAdapter(getSupportFragmentManager(), this);
-
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         viewPager.addOnPageChangeListener(new PageListener());
-
     }
 
     @Override

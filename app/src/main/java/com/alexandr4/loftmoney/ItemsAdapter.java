@@ -129,28 +129,9 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         }
     }
 
-    public void clear() {
-        items.clear();
-    }
-
-    public void addAll(List<Item> items) {
-        this.items.addAll(items);
-        notifyDataSetChanged();
-    }
-
     public void add(Item item) {
         this.items.add(item);
         notifyDataSetChanged();
     }
-
-    public void remove(int id) {
-        for (Item item : this.items)
-            if (item.id == id) {
-                this.items.remove(item);
-                notifyDataSetChanged();
-                break;
-            }
-    }
-
 
 }

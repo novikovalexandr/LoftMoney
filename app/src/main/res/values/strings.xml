@@ -24,7 +24,7 @@
     <string name="delete_yes">Да</string>
     <string name="delete_no">Нет</string>
 
-    <string name="problem_authorization_message">Проблемы авторизации</string>
+    <string name="auth_error_message">Проблемы авторизации</string>
 
     <string-array name="main_tabs">
         <item>@string/income</item>

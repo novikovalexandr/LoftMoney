@@ -21,8 +21,7 @@
             android:layout_marginEnd="8dp"
             android:layout_weight="1"
             android:textColor="@color/medium_grey"
-            android:textSize="@dimen/itemTextViewTextSize"
-            tools:text="dfgdfgfhgjhkj" />
+            android:textSize="@dimen/itemTextViewTextSize" />
 
         <TextView
             android:id="@+id/price"
@@ -31,8 +30,7 @@
             android:layout_gravity="center_vertical"
             android:layout_weight="0"
             android:textColor="@color/dark_sky_blue"
-            android:textSize="@dimen/itemTextViewTextSize"
-            tools:text="1004" />
+            android:textSize="@dimen/itemTextViewTextSize" />
 
     </LinearLayout>
 

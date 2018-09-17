@@ -22,12 +22,6 @@ public class Item implements Parcelable {
         this.type = type;
     }
 
-  /*  public Item(String name, int price, String type) {
-        this.name = name;
-        this.price = price;
-        this.type = type;
-    }*/
-
     public int getId() {
         return id;
     }
@@ -73,6 +67,5 @@ public class Item implements Parcelable {
         price = in.readInt();
         type = in.readString();
     }
-
 
 }
