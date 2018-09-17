@@ -39,7 +39,8 @@ public class AddActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String name = nameInput.getText().toString();
                 String price = priceInput.getText().toString();
-                Item item = new Item(name, Integer.parseInt(price), type);
+                //Item item = new Item(name, Integer.parseInt(price), type);
+                Item item = new Item(0, name, Integer.parseInt(price), type);
                 Intent intent = new Intent();
                 intent.putExtra(KEY_ITEM, item);
                 setResult(RESULT_OK, intent);
@@ -49,7 +50,6 @@ public class AddActivity extends AppCompatActivity {
     }
 
     private class TextListener implements TextWatcher {
-
 
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {

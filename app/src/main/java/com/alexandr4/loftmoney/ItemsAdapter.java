@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHolder> {
 
     private List<Item> items = Collections.emptyList();
@@ -57,7 +58,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
     private SparseBooleanArray selections = new SparseBooleanArray();
 
     public void toggleItem(int position) {
-        if (selections.get(position,false)) {
+        if (selections.get(position, false)) {
             selections.put(position, false);
         } else {
             selections.put(position, true);
@@ -81,6 +82,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
     }
 
     public boolean removeItem(int position) {
+        ItemsFragment.delItem(items.get(position).id);
         items.remove(position);
         notifyItemRemoved(position);
         return true;
@@ -126,4 +128,29 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
             });
         }
     }
+
+    public void clear() {
+        items.clear();
+    }
+
+    public void addAll(List<Item> items) {
+        this.items.addAll(items);
+        notifyDataSetChanged();
+    }
+
+    public void add(Item item) {
+        this.items.add(item);
+        notifyDataSetChanged();
+    }
+
+    public void remove(int id) {
+        for (Item item : this.items)
+            if (item.id == id) {
+                this.items.remove(item);
+                notifyDataSetChanged();
+                break;
+            }
+    }
+
+
 }
