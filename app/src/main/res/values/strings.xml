@@ -4,6 +4,11 @@
     <string name="expense">Расходы</string>
     <string name="balance">Баланс</string>
 
+    <!-- activity_auth -->
+    <string name="auth_logo_text">LoftMoney</string>
+    <string name="auth_version_text">Версия 1.0 \n2018</string>
+    <string name="auth_signin_button">Войти</string>
+
     <!-- activity_add -->
     <string name="add_hint_name">Наименование</string>
     <string name="add_hint_price">Цена</string>
@@ -19,13 +24,18 @@
     <string name="delete_yes">Да</string>
     <string name="delete_no">Нет</string>
 
+    <string name="auth_error_message">Проблемы авторизации. Для работы приложения необходимо подключение к интеренет.</string>
+    <string name="loadItem_error_message">Не удалось загрузить данные с сервера. Для работы приложения необходимо подключение к интеренет.</string>
+    <string name="addItem_error_message">Не удалось отправить данные на сервер. Для работы приложения необходимо подключение к интеренет.</string>
+    <string name="delItem_error_message">Не удалось произвести удаление данных на сервере. Для работы приложения необходимо подключение к интеренет.</string>
+
     <string-array name="main_tabs">
         <item>@string/income</item>
         <item>@string/expense</item>
         <item>@string/balance</item>
     </string-array>
 
-    <!-- TODO: Remove or change this placeholder text -->
+    <!-- TODO: Remove or change this placeholder text-->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

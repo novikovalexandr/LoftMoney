@@ -23,7 +23,9 @@
     <color name="action_mode_color">#333f59</color>
     <color name="item_background_selected">#f2f2f2</color>
     <color name="item_background_default">@color/white</color>
+    <color name="auth_version_text">#59ffffff</color>
 
-
+    <color name="fab">#ff9e57</color>
+    <color name="bt_sign_in_bg">#eeffffff</color>
 
 </resources>

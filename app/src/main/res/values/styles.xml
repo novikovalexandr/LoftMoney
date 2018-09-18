@@ -18,6 +18,16 @@
         <item name="colorAccent">@color/dark_sky_blue</item>
     </style>
 
-
+    <!-- SignInButton. -->
+    <style name="SignInButton" parent="Theme.AppCompat.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:background">@drawable/bt_signin_background</item>
+        <item name="android:drawableStart">@drawable/ic_logo_google</item>
+        <item name="android:paddingStart">40dp</item>
+        <item name="android:paddingEnd">40dp</item>
+        <item name="android:text">@string/auth_signin_button</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:textColor">@color/lightish_blue</item>
+    </style>
 
 </resources>

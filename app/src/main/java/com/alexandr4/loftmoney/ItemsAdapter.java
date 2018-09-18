@@ -2,17 +2,16 @@ package com.alexandr4.loftmoney;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
-import android.support.design.widget.TabLayout;
 import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHolder> {
 
@@ -32,6 +31,11 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
         this.items.add(item);
         notifyItemInserted(items.size() - 1);
     }
+
+    public int getIdItem(int idArray) {
+        return this.items.get(idArray).id;
+    }
+
 
     @Override
     public int getItemCount() {
@@ -57,7 +61,7 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
     private SparseBooleanArray selections = new SparseBooleanArray();
 
     public void toggleItem(int position) {
-        if (selections.get(position,false)) {
+        if (selections.get(position, false)) {
             selections.put(position, false);
         } else {
             selections.put(position, true);
@@ -95,7 +99,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
             super(itemView);
             name = itemView.findViewById(R.id.name);
             price = itemView.findViewById(R.id.price);
-
         }
 
         void bind(final Item item,
@@ -127,4 +130,10 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
             });
         }
     }
+
+    public void add(Item item) {
+        this.items.add(item);
+        notifyDataSetChanged();
+    }
+
 }

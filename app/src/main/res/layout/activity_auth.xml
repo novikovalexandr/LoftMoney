@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_gravity="center_horizontal"
+    android:background="@color/lightish_blue"
+    android:gravity="center"
+    tools:context=".AuthActivity">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/ic_logo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:fontFamily="sans-serif-medium"
+        android:hint="@string/auth_logo_text"
+        android:textColorHint="@color/white"
+        android:textSize="@dimen/authLogoText"
+        android:textStyle="normal" />
+
+    <Button
+        android:id="@+id/sign_in_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/SignInButton"
+        android:layout_marginTop="37dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="121dp"
+        android:fontFamily="sans-serif-light"
+        android:hint="@string/auth_version_text"
+        android:textColorHint="@color/auth_version_text"
+        android:textSize="@dimen/authVersionText"
+        android:textStyle="normal" />
+
+</LinearLayout>

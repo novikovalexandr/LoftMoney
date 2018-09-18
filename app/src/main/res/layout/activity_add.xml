@@ -64,5 +64,4 @@
         android:textColor="@color/color_button_text"
         android:textSize="@dimen/addBtnTextSize" />
 
-
 </LinearLayout>
