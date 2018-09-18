@@ -24,7 +24,10 @@
     <string name="delete_yes">Да</string>
     <string name="delete_no">Нет</string>
 
-    <string name="auth_error_message">Проблемы авторизации</string>
+    <string name="auth_error_message">Проблемы авторизации. Для работы приложения необходимо подключение к интеренет.</string>
+    <string name="loadItem_error_message">Не удалось загрузить данные с сервера. Для работы приложения необходимо подключение к интеренет.</string>
+    <string name="addItem_error_message">Не удалось отправить данные на сервер. Для работы приложения необходимо подключение к интеренет.</string>
+    <string name="delItem_error_message">Не удалось произвести удаление данных на сервере. Для работы приложения необходимо подключение к интеренет.</string>
 
     <string-array name="main_tabs">
         <item>@string/income</item>

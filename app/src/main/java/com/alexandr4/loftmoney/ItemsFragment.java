@@ -1,31 +1,16 @@
 package com.alexandr4.loftmoney;
 
-
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-
-
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.AsyncTaskLoader;
 import android.support.v4.content.ContextCompat;
-import android.support.v4.content.Loader;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,12 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
-import java.util.zip.Inflater;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -125,6 +106,7 @@ public class ItemsFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<List<Item>> call, @NonNull Throwable t) {
+                showError(getString(R.string.loadItem_error_message));
                 refresh.setRefreshing(false);
             }
         });
@@ -144,30 +126,35 @@ public class ItemsFragment extends Fragment {
 
             @Override
             public void onFailure(@NonNull Call<PostResults> call, @NonNull Throwable t) {
+                showError(getString(R.string.addItem_error_message));
             }
         });
     }
 
-    public static void delItem(final int id) {
+    public boolean delItem(final int id) {
         Call<PostResults> call = api.removeItem(id);
         call.enqueue(new Callback<PostResults>() {
             @Override
             public void onResponse(@NonNull Call<PostResults> call, @NonNull Response<PostResults> response) {
-
             }
 
             @Override
             public void onFailure(@NonNull Call<PostResults> call, @NonNull Throwable t) {
-
+                showError(getString(R.string.delItem_error_message));
             }
         });
+        return true;
     }
 
     public void removeSelectedItems() {
         List<Integer> selected = adapter.getSelectedItems();
+
         int j = selected.size();
         for (int i = 0; i < j; i++) {
-            if (adapter.removeItem(selected.get(i))) {
+            Integer position = selected.get(i);
+            boolean deleteItem = delItem(adapter.getIdItem(position));
+            if (deleteItem) {
+                adapter.removeItem(position);
                 i--;
                 j--;
             }
@@ -204,9 +191,14 @@ public class ItemsFragment extends Fragment {
             ((AppCompatActivity) Objects.requireNonNull(getActivity())).startSupportActionMode(new ActionModeCallback());
             toggleItem(position);
         }
+
         private void toggleItem(int position) {
             adapter.toggleItem(position);
         }
+    }
+
+    private void showError(String error) {
+        Toast.makeText(getActivity(), error, Toast.LENGTH_SHORT).show();
     }
 
     private class ActionModeCallback implements ActionMode.Callback {

@@ -1,16 +1,11 @@
 package com.alexandr4.loftmoney;
 
 import android.app.Application;
-import android.os.Build;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-
 import java.io.IOException;
-
 import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;

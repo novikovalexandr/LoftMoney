@@ -3,8 +3,6 @@ package com.alexandr4.loftmoney;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
-
 public class Item implements Parcelable {
 
     public static final String TYPE_EXPENSE = "expense";
