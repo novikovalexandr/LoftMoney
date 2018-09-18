@@ -41,12 +41,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
         toolbar = findViewById(R.id.toolbar);
         viewPager = findViewById(R.id.view_pager);
         tabLayout = findViewById(R.id.tab_layout);
         fab = findViewById(R.id.fab);
+
+        App app = (App) getApplication();
+        if (!app.isLoggedIn()) {
+            logout();
+        }
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -74,6 +78,10 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
         viewPager.addOnPageChangeListener(new PageListener());
+    }
+
+    private void logout() {
+        startActivity(new Intent(this, AuthActivity.class));
     }
 
     @Override

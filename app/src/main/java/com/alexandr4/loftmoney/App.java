@@ -62,6 +62,14 @@ public class App extends Application {
         return api;
     }
 
+    public boolean isLoggedIn() {
+        return !TextUtils.isEmpty(getAuthToken());
+    }
+
+    public void deleteAuthToken() {
+        getSharedPreferences(PREFERENCES_SESSION, MODE_PRIVATE).edit().remove(KEY_AUTH_TOKEN).apply();
+    }
+
     public void saveAuthToken(String token) {
         getSharedPreferences(PREFERENCES_SESSION, MODE_PRIVATE).edit().putString(KEY_AUTH_TOKEN, token).apply();
     }
@@ -79,5 +87,6 @@ public class App extends Application {
             return chain.proceed(originalRequest.newBuilder().url(url).build());
         }
     }
+
 
 }
