@@ -11,6 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -18,8 +19,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
 import java.util.List;
 import java.util.Objects;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -32,7 +35,7 @@ import static android.app.Activity.RESULT_OK;
  */
 public class ItemsFragment extends Fragment {
 
-    private static final String KEY_TYPE = "type";
+    public static final String KEY_TYPE = "type";
     public static final int REQUEST_CODE = 100;
 
     public static ItemsFragment newInstance(String type) {
@@ -101,6 +104,7 @@ public class ItemsFragment extends Fragment {
             public void onResponse(@NonNull Call<List<Item>> call, @NonNull Response<List<Item>> response) {
                 refresh.setRefreshing(false);
                 List<Item> items = response.body();
+                //adapter.sumItems(items);
                 adapter.setItems(items);
             }
 
@@ -121,6 +125,7 @@ public class ItemsFragment extends Fragment {
                 if (postResult != null && postResult.isSuccess()) {
                     item.id = postResult.id;
                     adapter.addItem(item);
+
                 }
             }
 
@@ -243,6 +248,5 @@ public class ItemsFragment extends Fragment {
             });
         }
     }
-
 
 }

@@ -28,4 +28,9 @@
     <color name="fab">#ff9e57</color>
     <color name="bt_sign_in_bg">#eeffffff</color>
 
+    <color name="expense_color">#4a90e2</color>
+    <color name="income_color">@color/apple_green</color>
+    <color name="pale_orange">#ff9e57</color>
+    <color name="black">#000000</color>
+
 </resources>

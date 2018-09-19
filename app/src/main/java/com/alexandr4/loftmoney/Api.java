@@ -18,7 +18,7 @@ public interface Api {
     Call<Result> logout();
 
     @GET("balance")
-    Call<BalanceResult> getBalance();
+    Call<BalanceResult> balance();
 
     @GET("items")
     Call<List<Item>> getItems(@Query("type") String type);
