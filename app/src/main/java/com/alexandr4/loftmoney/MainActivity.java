@@ -10,7 +10,10 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.view.ActionMode;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
@@ -23,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar;
     private FloatingActionButton fab;
     private ActionMode actionMode;
+    private App app;
 
     public Toolbar getToolbar() {
         return toolbar;
@@ -42,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         tabLayout = findViewById(R.id.tab_layout);
         fab = findViewById(R.id.fab);
 
-        App app = (App) getApplication();
+        app = (App) getApplication();
         if (!app.isLoggedIn()) {
             logout();
         }
@@ -77,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void logout() {
         startActivity(new Intent(this, AuthActivity.class));
+        app.deleteAuthToken();
     }
 
     @Override
@@ -131,6 +136,18 @@ public class MainActivity extends AppCompatActivity {
         for (Fragment fragment : fragments) {
             fragment.onActivityResult(requestCode, resultCode, data);
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        logout();
+        return true;
     }
 
 }

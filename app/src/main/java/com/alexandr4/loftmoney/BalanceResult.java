@@ -13,6 +13,7 @@ public class BalanceResult extends Result {
         return totalExpenses;
     }
 
+    // not use
     public void setTotalExpenses(int totalExpenses) {
         this.totalExpenses = totalExpenses;
     }
@@ -21,6 +22,7 @@ public class BalanceResult extends Result {
         return totalIncome;
     }
 
+    // not use
     public void setTotalIncome(int totalIncome) {
         this.totalIncome = totalIncome;
     }

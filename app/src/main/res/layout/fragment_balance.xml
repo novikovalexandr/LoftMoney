@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/medium_grey"
-            android:textSize="14sp"
+            android:textSize="@dimen/balance_small"
             android:text="@string/balance_balance" />
 
         <TextView
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/balance_title"
             android:textColor="@color/pale_orange"
-            android:textSize="48sp"
+            android:textSize="@dimen/balance_large"
             android:text="@string/balance_balance" />
 
     </RelativeLayout>
@@ -71,7 +71,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/medium_grey"
-            android:textSize="10sp"
+            android:textSize="@dimen/balance_very_small"
             android:text="@string/balance_expense" />
 
         <TextView
@@ -81,7 +81,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/expense_title"
             android:textColor="@color/dark_sky_blue"
-            android:textSize="24sp"
+            android:textSize="@dimen/balance_text_medium"
             tools:text="5400₽" />
 
     </RelativeLayout>
@@ -102,7 +102,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/medium_grey"
-            android:textSize="10sp"
+            android:textSize="@dimen/balance_very_small"
             android:text="@string/balance_income"/>
 
         <TextView
@@ -112,8 +112,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/income_title"
             android:textColor="@color/apple_green"
-            android:textSize="24sp"
-            tools:text="5400₽" />
+            android:textSize="@dimen/balance_text_medium"/>
 
     </RelativeLayout>
 

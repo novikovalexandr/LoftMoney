@@ -4,22 +4,14 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.List;
-import java.util.Objects;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-
-import static com.alexandr4.loftmoney.Item.TYPE_EXPENSE;
-import static com.alexandr4.loftmoney.Item.TYPE_INCOME;
 
 /**
  * A simple {@link Fragment} subclass.
