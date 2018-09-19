@@ -5,4 +5,10 @@
     <dimen name="itemTextViewTextSize">20sp</dimen>
     <dimen name="authVersionText">14sp</dimen>
     <dimen name="authLogoText">36sp</dimen>
+    <dimen name="balance_text_medium">24sp</dimen>
+    <dimen name="balance_text_xlarge">50sp</dimen>
+    <dimen name="balance_text_yourBalance">20sp</dimen>
+    <dimen name="balance_small">14sp</dimen>
+    <dimen name="balance_large">48sp</dimen>
+    <dimen name="balance_very_small">10sp</dimen>
 </resources>

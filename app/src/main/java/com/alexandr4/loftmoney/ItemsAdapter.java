@@ -8,16 +8,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-
 
 public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHolder> {
 
     private List<Item> items = Collections.emptyList();
     private ItemsAdapterListener listener = null;
-
+    private static final String TAG = "!!!!";
     public void setItems(List<Item> items) {
         this.items = items;
         notifyDataSetChanged();
@@ -137,3 +137,6 @@ public class ItemsAdapter extends RecyclerView.Adapter<ItemsAdapter.ItemViewHold
     }
 
 }
+
+
+

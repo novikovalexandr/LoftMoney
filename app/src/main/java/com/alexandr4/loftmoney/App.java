@@ -63,6 +63,7 @@ public class App extends Application {
 
     public void deleteAuthToken() {
         getSharedPreferences(PREFERENCES_SESSION, MODE_PRIVATE).edit().remove(KEY_AUTH_TOKEN).apply();
+       // getSharedPreferences(PREFERENCES_SESSION, MODE_PRIVATE).edit().putString(KEY_AUTH_TOKEN, "").apply();
     }
 
     public void saveAuthToken(String token) {

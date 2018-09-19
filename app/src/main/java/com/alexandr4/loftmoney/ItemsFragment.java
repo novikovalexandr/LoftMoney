@@ -32,7 +32,7 @@ import static android.app.Activity.RESULT_OK;
  */
 public class ItemsFragment extends Fragment {
 
-    private static final String KEY_TYPE = "type";
+    public static final String KEY_TYPE = "type";
     public static final int REQUEST_CODE = 100;
 
     public static ItemsFragment newInstance(String type) {
@@ -101,6 +101,7 @@ public class ItemsFragment extends Fragment {
             public void onResponse(@NonNull Call<List<Item>> call, @NonNull Response<List<Item>> response) {
                 refresh.setRefreshing(false);
                 List<Item> items = response.body();
+                //adapter.sumItems(items);
                 adapter.setItems(items);
             }
 
@@ -121,6 +122,7 @@ public class ItemsFragment extends Fragment {
                 if (postResult != null && postResult.isSuccess()) {
                     item.id = postResult.id;
                     adapter.addItem(item);
+
                 }
             }
 
@@ -243,6 +245,5 @@ public class ItemsFragment extends Fragment {
             });
         }
     }
-
 
 }

@@ -35,6 +35,11 @@
         <item>@string/balance</item>
     </string-array>
 
+    <string name="balance_expense">Расход</string>
+    <string name="balance_income">Доход</string>
+    <string name="balance_balance">Доступные финансы</string>
+    <string name="menu_out">Выйти</string>
+
     <!-- TODO: Remove or change this placeholder text-->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
